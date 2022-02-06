@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Caching;
+using Sitecore.Caching.Generics;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
 using Sitecore.Sites;
