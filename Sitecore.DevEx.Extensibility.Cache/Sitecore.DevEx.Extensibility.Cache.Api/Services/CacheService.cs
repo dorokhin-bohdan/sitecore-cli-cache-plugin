@@ -68,9 +68,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
                 sw.Stop();
 
                 cacheScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.AllCleared,
-                    "[Cache] Cache cleared successfully."));
+                    "[Cache] Cache cleared successfully"));
                 cacheScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.AllCleared,
-                    $"[Cache] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
+                    $"[Cache] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
                 result.OperationResults = new[] { cacheScope };
             }
             catch (Exception e)
@@ -92,9 +92,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             sw.Stop();
 
             dataScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.DataCleared,
-                "[Cache][Data] Data cache cleared successfully."));
+                "[Cache][Data] Data cache cleared successfully"));
             dataScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.DataCleared,
-                $"[Cache][Data] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
+                $"[Cache][Data] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
 
             return dataScope;
         }
@@ -109,9 +109,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             sw.Stop();
 
             htmlScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.HtmlCleared,
-                "[Cache][HTML] Html cache cleared successfully."));
+                "[Cache][HTML] Html cache cleared successfully"));
             htmlScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.HtmlCleared,
-                $"[Cache][HTML] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
+                $"[Cache][HTML] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
 
             return htmlScope;
         }
@@ -126,9 +126,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             sw.Stop();
 
             itemScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.ItemCleared,
-                "[Cache][Item] Item cache cleared successfully."));
+                "[Cache][Item] Item cache cleared successfully"));
             itemScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.ItemCleared,
-                $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
+                $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
 
             return itemScope;
         }
@@ -143,9 +143,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             sw.Stop();
 
             itemScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.PathCleared,
-                "[Cache][Item] Item cache cleared successfully."));
+                "[Cache][Item] Item cache cleared successfully"));
             itemScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.PathCleared,
-                $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
+                $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
 
             return itemScope;
         }
