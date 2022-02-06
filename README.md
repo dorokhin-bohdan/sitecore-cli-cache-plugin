@@ -5,7 +5,7 @@ The cache plugin automates clearing cache operations, such as clear all cache an
 ## Usage
 You can use the command as follows:
 ``` powershell
-dotnet sitecore index [subcommand] [options]
+dotnet sitecore cache [subcommand] [options]
 ```
 ## Usage
 You can use the following subcommands:
