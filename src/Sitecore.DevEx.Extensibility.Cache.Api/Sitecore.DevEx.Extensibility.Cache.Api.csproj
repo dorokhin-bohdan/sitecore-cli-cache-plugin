@@ -11,9 +11,9 @@
         <AssemblyName>Sitecore.DevEx.Extensibility.Cache.Api</AssemblyName>
         <PackageId>Sitecore.DevEx.Extensibility.Cache.Api</PackageId>
         <Authors>Bohdan Dorokhin</Authors>
-        <Product>Sitecore.DevEx.Extensibility.Cache.Api</Product>
+        <Product>Sitecore.DevEx.Extensibility.Cache</Product>
         <RootNamespace>Sitecore.DevEx.Extensibility.Cache.Api</RootNamespace>
-        <Version>1.0.0</Version>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,5 +24,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Sitecore.DevEx.Extensibility.Cache.Models\Sitecore.DevEx.Extensibility.Cache.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="..\Sitecore.DevEx.Extensibility.Cache\Properties\AssemblyInfo.cs">
+        <Link>Properties\AssemblyInfo.cs</Link>
+      </Compile>
     </ItemGroup>
 </Project>

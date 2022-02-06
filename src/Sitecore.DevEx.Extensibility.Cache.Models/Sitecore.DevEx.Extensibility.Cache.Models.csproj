@@ -2,11 +2,26 @@
     <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.1.3" />
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <NeutralLanguage>en</NeutralLanguage>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Configurations>Debug;Release;Escrow</Configurations>
+        <AssemblyName>Sitecore.DevEx.Extensibility.Cache.Models</AssemblyName>
+        <PackageId>Sitecore.DevEx.Extensibility.Cache.Models</PackageId>
+        <Authors>Bohdan Dorokhin</Authors>
+        <Product>Sitecore.DevEx.Extensibility.Cache</Product>
+        <RootNamespace>Sitecore.DevEx.Extensibility.Cache.Models</RootNamespace>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
       <PackageReference Include="Sitecore.Devex.Client.Cli.Extensibility" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Properties" />
     </ItemGroup>
 
 </Project>

@@ -16,7 +16,8 @@
         <Authors>Bohdan Dorokhin</Authors>
         <Product>Sitecore.DevEx.Extensibility.Cache</Product>
         <RootNamespace>Sitecore.DevEx.Extensibility.Cache</RootNamespace>
-        <Version>1.0.0</Version>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <PackageVersion>4.1.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
