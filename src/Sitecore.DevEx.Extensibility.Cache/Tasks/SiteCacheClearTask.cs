@@ -48,29 +48,44 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             }
         }
 
-        private CacheType? GetCacheType(SiteCacheClearTaskOptions options)
+        private static CacheType? GetCacheType(SiteCacheClearTaskOptions options)
         {
             CacheType? cacheType = null;
 
-            if (options.CleanData)
-                cacheType = cacheType.HasValue
-                    ? cacheType | CacheType.Data
-                    : CacheType.Data;
+            if (options.ClearData)
+                cacheType = (cacheType ?? 0) | CacheType.Data;
 
-            if (options.CleanHtml)
-                cacheType = cacheType.HasValue
-                    ? cacheType | CacheType.Html
-                    : CacheType.Html;
-
-            if (options.CleanItem)
-                cacheType = cacheType.HasValue
-                    ? cacheType | CacheType.Item
-                    : CacheType.Item;
-
-            if (options.CleanPath)
-                cacheType = cacheType.HasValue
-                    ? cacheType | CacheType.Path
-                    : CacheType.Path;
+            if (options.ClearHtml)
+                cacheType = (cacheType ?? 0) | CacheType.Html;
+            
+            if (options.ClearItem)
+                cacheType = (cacheType ?? 0) | CacheType.Item;
+            if (options.ClearPath)
+                cacheType = (cacheType ?? 0) | CacheType.Path;
+            
+            if (options.ClearItemPaths)
+                cacheType = (cacheType ?? 0) | CacheType.ItemPaths;
+            
+            if (options.ClearStandardValues)
+                cacheType = (cacheType ?? 0) | CacheType.StandardValues;
+            
+            if (options.ClearFallback)
+                cacheType = (cacheType ?? 0) | CacheType.IsFallbackValid;
+            
+            if (options.ClearRegistry)
+                cacheType = (cacheType ?? 0) | CacheType.Registry;
+            
+            if (options.ClearXsl)
+                cacheType = (cacheType ?? 0) | CacheType.Xsl;
+            
+            if (options.ClearFilteredItems)
+                cacheType = (cacheType ?? 0) | CacheType.FilteredItems;
+            
+            if (options.ClearRenderingParams)
+                cacheType = (cacheType ?? 0) | CacheType.RenderingParameters;
+            
+            if (options.ClearViewState)
+                cacheType = (cacheType ?? 0) | CacheType.ViewState;
 
             return cacheType;
         }

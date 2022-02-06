@@ -13,10 +13,18 @@ namespace Sitecore.DevEx.Extensibility.Cache.Commands
             AddOption(ArgOptions.Config);
             AddOption(ArgOptions.EnvironmentName);
             AddOption(ArgOptions.SiteName);
-            AddOption(ArgOptions.CleanData);
-            AddOption(ArgOptions.CleanHtml);
-            AddOption(ArgOptions.CleanItem);
-            AddOption(ArgOptions.CleanPath);
+            AddOption(ArgOptions.ClearData);
+            AddOption(ArgOptions.ClearHtml);
+            AddOption(ArgOptions.ClearItem);
+            AddOption(ArgOptions.ClearPath);
+            AddOption(ArgOptions.ClearItemPaths);
+            AddOption(ArgOptions.ClearStandardValues);
+            AddOption(ArgOptions.ClearFallback);
+            AddOption(ArgOptions.ClearRegistry);
+            AddOption(ArgOptions.ClearXsl);
+            AddOption(ArgOptions.ClearFilteredItems);
+            AddOption(ArgOptions.ClearRenderingParams);
+            AddOption(ArgOptions.ClearViewState);
             AddOption(ArgOptions.Trace);
             AddOption(ArgOptions.Verbose);
         }

@@ -3,6 +3,17 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>8</LangVersion>
+        <NeutralLanguage>en</NeutralLanguage>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Configurations>Debug;Release;Escrow</Configurations>
+        <AssemblyName>Sitecore.DevEx.Extensibility.Cache.Api</AssemblyName>
+        <PackageId>Sitecore.DevEx.Extensibility.Cache.Api</PackageId>
+        <Authors>Bohdan Dorokhin</Authors>
+        <Product>Sitecore.DevEx.Extensibility.Cache.Api</Product>
+        <RootNamespace>Sitecore.DevEx.Extensibility.Cache.Api</RootNamespace>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,5 +25,4 @@
     <ItemGroup>
       <ProjectReference Include="..\Sitecore.DevEx.Extensibility.Cache.Models\Sitecore.DevEx.Extensibility.Cache.Models.csproj" />
     </ItemGroup>
-
 </Project>
