@@ -11,14 +11,14 @@ namespace Sitecore.DevEx.Extensibility.Cache.Commands
         public SiteCacheClearCommand(IServiceProvider container) : base("site", "Management cache for Sitecore site.", container)
         {
             AddOption(ArgOptions.Config);
-            AddOption(ArgOptions.Trace);
-            AddOption(ArgOptions.Verbose);
             AddOption(ArgOptions.EnvironmentName);
             AddOption(ArgOptions.SiteName);
             AddOption(ArgOptions.CleanData);
             AddOption(ArgOptions.CleanHtml);
             AddOption(ArgOptions.CleanItem);
             AddOption(ArgOptions.CleanPath);
+            AddOption(ArgOptions.Trace);
+            AddOption(ArgOptions.Verbose);
         }
 
         protected override async Task<int> Handle(SiteCacheClearTask task, SiteCacheClearSchemaArgs args)

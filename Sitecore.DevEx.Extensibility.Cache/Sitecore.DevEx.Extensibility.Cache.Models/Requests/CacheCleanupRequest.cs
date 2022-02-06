@@ -2,7 +2,7 @@
 {
     public class CacheCleanupRequest
     {
-        public CacheType CacheType { get; set; }
+        public CacheType? CacheType { get; set; }
         public string Site { get; set; }
     }
 }

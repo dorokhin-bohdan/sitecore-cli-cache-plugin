@@ -4,7 +4,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 {
     public interface ICacheService
     {
-        void ClearBySite(string siteName, CacheType type);
-        void ClearAll();
+        CacheResultModel ClearBySite(string siteName, CacheType? type);
+        CacheResultModel ClearAll();
     }
 }

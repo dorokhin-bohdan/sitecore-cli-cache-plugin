@@ -17,6 +17,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api
             // Services
             serviceCollection.AddTransient<IEnumService, EnumService>();
             serviceCollection.AddTransient<ICacheService, CacheService>();
+            serviceCollection.AddTransient<IBytesConverter, BytesConverter>();
         }
     }
 }

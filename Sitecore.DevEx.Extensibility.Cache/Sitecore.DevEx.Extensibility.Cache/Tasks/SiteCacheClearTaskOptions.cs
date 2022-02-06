@@ -6,13 +6,13 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
     {
         public string SiteName { get; set; }
         
-        public bool Data { get; set; }
+        public bool CleanData { get; set; }
         
-        public bool Html { get; set; }
+        public bool CleanHtml { get; set; }
 
-        public bool Item { get; set; }
+        public bool CleanItem { get; set; }
 
-        public bool Path { get; set; }
+        public bool CleanPath { get; set; }
         
         public string Config { get; set; }
         
@@ -22,6 +22,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
         {
             Require(nameof(Config));
             Default(nameof(EnvironmentName), "default");
+            Default(nameof(SiteName), "website");
         }
     }
 }
