@@ -39,9 +39,13 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             outerStopwatch.Stop();
             
             PrintLogs(result.OperationResults);
-            Logger.LogConsoleInformation(string.Empty);
-            Logger.LogConsoleInformation($"Clearing cache is finished", ConsoleColor.Green);
-            Logger.LogConsoleVerbose($"Clearing cache is completed in {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);
+            
+            if (result.Successful)
+            {
+                Logger.LogConsoleInformation(string.Empty);
+                Logger.LogConsoleInformation($"Clearing cache is finished", ConsoleColor.Green);
+                Logger.LogConsoleVerbose($"Clearing cache is completed in {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);   
+            }
         }
 
         private CacheType? GetCacheType(SiteCacheClearTaskOptions options)

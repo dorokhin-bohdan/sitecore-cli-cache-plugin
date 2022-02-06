@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Client.Logging;
 using Sitecore.DevEx.Configuration.Models;
+using Sitecore.DevEx.Extensibility.Cache.Constants;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Extensibility.Cache.Models.Requests;
 
@@ -79,7 +80,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Services
 
         private HttpClient GetHttpClient(EnvironmentConfiguration configuration)
         {
-            var httpClient = _httpClientFactory.CreateClient("Cache");
+            var httpClient = _httpClientFactory.CreateClient(CacheConstants.HttpClientName);
             httpClient.BaseAddress = configuration.Host;
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             

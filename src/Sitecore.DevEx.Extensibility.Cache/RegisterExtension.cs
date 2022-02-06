@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Sitecore.Devex.Client.Cli.Extensibility;
 using Sitecore.Devex.Client.Cli.Extensibility.Subcommands;
 using Sitecore.DevEx.Extensibility.Cache.Commands;
+using Sitecore.DevEx.Extensibility.Cache.Constants;
 using Sitecore.DevEx.Extensibility.Cache.Services;
 using Sitecore.DevEx.Extensibility.Cache.Tasks;
 
@@ -30,7 +31,7 @@ namespace Sitecore.DevEx.Extensibility.Cache
                 .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<SiteCacheClearTask>())
                 .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<CacheApiClient>());
 
-            serviceCollection.AddHttpClient("Cache", client =>
+            serviceCollection.AddHttpClient(CacheConstants.HttpClientName, client =>
                 {
                     client.Timeout = TimeSpan.FromMinutes(5);
                 })
