@@ -14,10 +14,10 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
     {
         private readonly IEnumService _enumService;
         private readonly IBytesConverter _bytesConverter;
-        private readonly IReadOnlyCollection<ICacheCleaner> _cacheCleaners;
+        private readonly IEnumerable<ICacheCleaner> _cacheCleaners;
 
         public CacheService(IEnumService enumService, IBytesConverter bytesConverter,
-            IReadOnlyCollection<ICacheCleaner> cacheCleaners)
+            IEnumerable<ICacheCleaner> cacheCleaners)
         {
             _enumService = enumService;
             _bytesConverter = bytesConverter;

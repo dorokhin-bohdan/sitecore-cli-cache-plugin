@@ -39,6 +39,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             var result = await _endpointService.ClearBySiteAsync(environmentConfiguration, request).ConfigureAwait(false);
             outerStopwatch.Stop();
             
+            if (result == null)
+                return;
+            
             PrintLogs(result.OperationResults);
             
             if (result.Successful)

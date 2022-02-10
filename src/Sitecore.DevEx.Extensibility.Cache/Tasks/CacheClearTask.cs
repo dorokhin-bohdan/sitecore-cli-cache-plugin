@@ -31,6 +31,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             var result = await _cacheApiClient.ClearAllAsync(environmentConfiguration).ConfigureAwait(false);
             outerStopwatch.Stop();
 
+            if (result == null)
+                return;
+            
             PrintLogs(result.OperationResults);
             
             if (result.Successful)

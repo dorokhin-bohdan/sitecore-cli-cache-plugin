@@ -24,6 +24,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Controllers
         }
 
         [HttpPost]
+        [Route("global")]
         public IHttpActionResult ClearAllCache()
         {
             var result = _cacheService.ClearAll();

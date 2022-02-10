@@ -29,53 +29,53 @@ namespace Sitecore.DevEx.Extensibility.Cache.Services
         public async Task<CacheResultModel> ClearBySiteAsync(EnvironmentConfiguration configuration,
             CacheCleanupRequest request)
         {
-            const string apiPath = "/sitecore/api/cachecleanup/site";
+            const string apiPath = "sitecore/api/cachecleanup/site";
             _logger.LogConsoleInformation("Processing...", ConsoleColor.Yellow);
             _logger.LogTrace(CacheEventIds.ApiQuery, "Sending cache request");
 
             var client = GetHttpClient(configuration);
             var json = _jsonService.Serialize(request);
-            var response = await configuration.MakeAuthenticatedRequest(client, _httpClient =>
+            try
             {
-                try
-                {
-                    return client.PostAsync(apiPath, new StringContent(json, Encoding.UTF8, "application/json"));
-                }
-                catch (Exception e)
-                {
-                    _logger.LogTrace(CacheEventIds.ApiQuery, $"HTTP Error invoking API call {configuration.Host}{apiPath}");
-                    _logger.LogConsole(LogLevel.Error, e.Message);
-                    throw;
-                }
-            }).ConfigureAwait(false);
-            
-            var resultJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return _jsonService.Deserialize<CacheResultModel>(resultJson);
+                var response = await configuration.MakeAuthenticatedRequest(client,
+                        _ => client.PostAsync(apiPath, new StringContent(json, Encoding.UTF8, "application/json")))
+                    .ConfigureAwait(false);
+                var resultJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return _jsonService.Deserialize<CacheResultModel>(resultJson);
+            }
+            catch (Exception e)
+            {
+                _logger.LogTrace(CacheEventIds.ApiQuery,
+                    $"HTTP Error invoking API call {configuration.Host}{apiPath}");
+                _logger.LogConsole(LogLevel.Error, e.Message);
+            }
+
+            return null;
         }
 
         public async Task<CacheResultModel> ClearAllAsync(EnvironmentConfiguration configuration)
         {
-            const string apiPath = "/sitecore/api/cachecleanup";
+            const string apiPath = "sitecore/api/cachecleanup/global";
             _logger.LogConsoleInformation("Processing...", ConsoleColor.Yellow);
             _logger.LogTrace(CacheEventIds.ApiQuery, "Sending cache request");
-           
+
             var client = GetHttpClient(configuration);
-            var response = await configuration.MakeAuthenticatedRequest(client, _httpClient =>
+            try
             {
-                try
-                {
-                    return client.PostAsync(apiPath, null);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogTrace(CacheEventIds.ApiQuery, $"HTTP Error invoking API call {configuration.Host}{apiPath}");
-                    _logger.LogConsole(LogLevel.Error, e.Message);
-                    throw;
-                }
-            }).ConfigureAwait(false);
+                var response = await configuration
+                    .MakeAuthenticatedRequest(client, _ => client.PostAsync(apiPath, null))
+                    .ConfigureAwait(false);
+                var resultJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return _jsonService.Deserialize<CacheResultModel>(resultJson);
+            }
+            catch (Exception e)
+            {
+                _logger.LogTrace(CacheEventIds.ApiQuery,
+                    $"HTTP Error invoking API call {configuration.Host}{apiPath}");
+                _logger.LogConsole(LogLevel.Error, e.Message);
+            }
             
-            var resultJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return _jsonService.Deserialize<CacheResultModel>(resultJson);
+            return null;
         }
 
         private HttpClient GetHttpClient(EnvironmentConfiguration configuration)
@@ -83,7 +83,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Services
             var httpClient = _httpClientFactory.CreateClient(CacheConstants.HttpClientName);
             httpClient.BaseAddress = configuration.Host;
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
             return httpClient;
         }
     }
