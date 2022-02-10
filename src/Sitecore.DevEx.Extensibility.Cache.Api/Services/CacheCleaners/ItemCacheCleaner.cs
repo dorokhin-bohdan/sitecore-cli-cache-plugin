@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -22,14 +23,22 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
             var itemScope = new OperationResult("Item");
             var size = site.Database.Caches.ItemCache.InnerCache.Size;
 
-            var sw = Stopwatch.StartNew();
-            site.Database.Caches.ItemCache.Clear();
-            sw.Stop();
+            try
+            {
+                var sw = Stopwatch.StartNew();
+                site.Database.Caches.ItemCache.Clear();
+                sw.Stop();
 
-            itemScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.ItemCleared,
-                "[Cache][Item] Item cache cleared successfully"));
-            itemScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.ItemCleared,
-                $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+                itemScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.ItemCleared,
+                    "[Cache][Item] Item cache cleared successfully"));
+                itemScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.ItemCleared,
+                    $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+            }
+            catch (Exception e)
+            {
+                itemScope.Chain(OperationResult.FromException(e));
+                itemScope.Success = false;
+            }
 
             return itemScope;
         }

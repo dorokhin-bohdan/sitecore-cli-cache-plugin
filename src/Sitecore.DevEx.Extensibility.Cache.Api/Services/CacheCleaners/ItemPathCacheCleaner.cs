@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -22,14 +23,22 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
             var itemPathsScope = new OperationResult("ItemPaths");
             var size = site.Database.Caches.ItemPathsCache.InnerCache.Size;
 
-            var sw = Stopwatch.StartNew();
-            site.Database.Caches.ItemPathsCache.Clear();
-            sw.Stop();
+            try
+            {
+                var sw = Stopwatch.StartNew();
+                site.Database.Caches.ItemPathsCache.Clear();
+                sw.Stop();
 
-            itemPathsScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.ItemPathsCleared,
-                "[Cache][ItemPaths] Item paths cache cleared successfully"));
-            itemPathsScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.ItemPathsCleared,
-                $"[Cache][ItemPaths] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+                itemPathsScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.ItemPathsCleared,
+                    "[Cache][ItemPaths] Item paths cache cleared successfully"));
+                itemPathsScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.ItemPathsCleared,
+                    $"[Cache][ItemPaths] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+            }
+            catch (Exception e)
+            {
+                itemPathsScope.Chain(OperationResult.FromException(e));
+                itemPathsScope.Success = false;
+            }
 
             return itemPathsScope;
         }

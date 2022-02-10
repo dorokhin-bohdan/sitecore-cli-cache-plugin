@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -22,15 +23,23 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
             var htmlScope = new OperationResult("HTML");
             var size = site.Caches.HtmlCache.InnerCache.Size;
 
-            var sw = Stopwatch.StartNew();
-            site.Caches.HtmlCache.Clear();
-            sw.Stop();
+            try
+            {
+                var sw = Stopwatch.StartNew();
+                site.Caches.HtmlCache.Clear();
+                sw.Stop();
 
-            htmlScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.HtmlCleared,
-                "[Cache][HTML] Html cache cleared successfully"));
-            htmlScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.HtmlCleared,
-                $"[Cache][HTML] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
-
+                htmlScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.HtmlCleared,
+                    "[Cache][HTML] Html cache cleared successfully"));
+                htmlScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.HtmlCleared,
+                    $"[Cache][HTML] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+            }
+            catch (Exception e)
+            {
+                htmlScope.Chain(OperationResult.FromException(e));
+                htmlScope.Success = false;
+            }
+            
             return htmlScope;
         }
     }

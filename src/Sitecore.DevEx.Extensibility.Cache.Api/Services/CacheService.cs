@@ -26,28 +26,21 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 
         public CacheResultModel ClearBySite(string siteName, CacheType? type)
         {
-            var result = new CacheResultModel();
+            var site = SiteContext.GetSite(siteName);
 
-            try
+            if (site == null)
             {
-                var site = SiteContext.GetSite(siteName);
+                throw new ArgumentException($"The {siteName} site not found");
+            }
 
-                if (site == null)
-                {
-                    throw new ArgumentException($"The {siteName} site not found");
-                }
-
-                result.OperationResults = type == null
+            var result = new CacheResultModel
+            {
+                OperationResults = type == null
                     ? ClearAllCachesForSite(site)
                     : _enumService.GetFlagValues(type.Value)
                         .Select(cacheType =>
-                            _cacheCleaners.FirstOrDefault(cc => cc.CacheType == cacheType)?.Clear(site));
-            }
-            catch (Exception e)
-            {
-                result.Successful = false;
-                result.OperationResults = new[] { OperationResult.FromException(e) };
-            }
+                            _cacheCleaners.FirstOrDefault(cc => cc.CacheType == cacheType)?.Clear(site))
+            };
 
             return result;
         }

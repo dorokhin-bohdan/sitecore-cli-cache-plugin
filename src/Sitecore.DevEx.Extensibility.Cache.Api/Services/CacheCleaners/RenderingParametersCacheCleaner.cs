@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -22,14 +23,22 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
             var renderingParamsScope = new OperationResult("RenderingParameters");
             var size = site.Caches.RenderingParametersCache.InnerCache.Size;
 
-            var sw = Stopwatch.StartNew();
-            site.Caches.RenderingParametersCache.Clear();
-            sw.Stop();
+            try
+            {
+                var sw = Stopwatch.StartNew();
+                site.Caches.RenderingParametersCache.Clear();
+                sw.Stop();
 
-            renderingParamsScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.RenderingParametersCleared,
-                "[Cache][RenderingParameters] Rendering Parameters cache cleared successfully"));
-            renderingParamsScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.RenderingParametersCleared,
-                $"[Cache][RenderingParameters] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+                renderingParamsScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.RenderingParametersCleared,
+                    "[Cache][RenderingParameters] Rendering Parameters cache cleared successfully"));
+                renderingParamsScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.RenderingParametersCleared,
+                    $"[Cache][RenderingParameters] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+            }
+            catch (Exception e)
+            {
+                renderingParamsScope.Chain(OperationResult.FromException(e));
+                renderingParamsScope.Success = false;
+            }
 
             return renderingParamsScope;
         }

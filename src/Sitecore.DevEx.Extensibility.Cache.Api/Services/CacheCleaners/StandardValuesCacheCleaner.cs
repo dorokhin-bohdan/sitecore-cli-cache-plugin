@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -22,14 +23,22 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
             var svScope = new OperationResult("StandardValues");
             var size = site.Database.Caches.StandardValuesCache.InnerCache.Size;
 
-            var sw = Stopwatch.StartNew();
-            site.Database.Caches.StandardValuesCache.Clear();
-            sw.Stop();
+            try
+            {
+                var sw = Stopwatch.StartNew();
+                site.Database.Caches.StandardValuesCache.Clear();
+                sw.Stop();
 
-            svScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.StandardValuesCleared,
-                "[Cache][StandardValues] Standard values cache cleared successfully"));
-            svScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.StandardValuesCleared,
-                $"[Cache][StandardValues] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+                svScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.StandardValuesCleared,
+                    "[Cache][StandardValues] Standard values cache cleared successfully"));
+                svScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.StandardValuesCleared,
+                    $"[Cache][StandardValues] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+            }
+            catch (Exception e)
+            {
+                svScope.Chain(OperationResult.FromException(e));
+                svScope.Success = false;
+            }
 
             return svScope;
         }
