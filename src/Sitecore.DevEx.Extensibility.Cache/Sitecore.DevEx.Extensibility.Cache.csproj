@@ -13,8 +13,6 @@
         <NoWarn>$(NoWarn);NU5100</NoWarn>
         <AssemblyName>Sitecore.DevEx.Extensibility.Cache</AssemblyName>
         <PackageId>Sitecore.DevEx.Extensibility.Cache</PackageId>
-        <Authors>Bohdan Dorokhin</Authors>
-        <Product>Sitecore.DevEx.Extensibility.Cache</Product>
         <RootNamespace>Sitecore.DevEx.Extensibility.Cache</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <PackageVersion>4.1.0</PackageVersion>

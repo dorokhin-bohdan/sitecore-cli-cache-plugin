@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyVersion("4.1.0")]
-[assembly: AssemblyFileVersion("4.1.0")]
-[assembly: AssemblyInformationalVersion("4.1.0")]
+[assembly: AssemblyProduct("Sitecore.DevEx.Extensibility.Cache")]
+[assembly: AssemblyDescription("Sitecore.DevEx.Extensibility.Cache")]

@@ -10,8 +10,6 @@
         <Configurations>Debug;Release;Escrow</Configurations>
         <AssemblyName>Sitecore.DevEx.Extensibility.Cache.Api</AssemblyName>
         <PackageId>Sitecore.DevEx.Extensibility.Cache.Api</PackageId>
-        <Authors>Bohdan Dorokhin</Authors>
-        <Product>Sitecore.DevEx.Extensibility.Cache</Product>
         <RootNamespace>Sitecore.DevEx.Extensibility.Cache.Api</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
@@ -27,8 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="..\Sitecore.DevEx.Extensibility.Cache\Properties\AssemblyInfo.cs">
-        <Link>Properties\AssemblyInfo.cs</Link>
+      <Compile Include="..\Sitecore.DevEx.Extensibility.Cache\Properties\CommonAssemblyInfo.cs">
+        <Link>Properties\CommonAssemblyInfo.cs</Link>
       </Compile>
     </ItemGroup>
 </Project>
