@@ -5,6 +5,7 @@ using Sitecore.DevEx.Extensibility.Cache.Models.Requests;
 namespace Sitecore.DevEx.Extensibility.Cache.Api.Controllers
 {
     [Authorize]
+    [RoutePrefix("sitecore/api/cachecleanup")]
     public class CacheCleanupController : ApiController
     {
         private readonly ICacheService _cacheService;
@@ -15,7 +16,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Controllers
         }
 
         [HttpPost]
-        [Route("sitecore/api/cachecleanup/site")]
+        [Route("site")]
         public IHttpActionResult ClearSiteCache(CacheCleanupRequest request)
         {
             var result = _cacheService.ClearBySite(request.Site, request.CacheType);
@@ -23,7 +24,6 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Controllers
         }
 
         [HttpPost]
-        [Route("sitecore/api/cachecleanup")]
         public IHttpActionResult ClearAllCache()
         {
             var result = _cacheService.ClearAll();

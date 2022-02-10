@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Sitecore.Devex.Client.Cli.Extensibility;
 using Sitecore.Devex.Client.Cli.Extensibility.Subcommands;
 using Sitecore.DevEx.Extensibility.Cache.Commands;
+using Sitecore.DevEx.Extensibility.Cache.Commands.Base;
 using Sitecore.DevEx.Extensibility.Cache.Constants;
 using Sitecore.DevEx.Extensibility.Cache.Services;
 using Sitecore.DevEx.Extensibility.Cache.Tasks;
@@ -27,6 +28,7 @@ namespace Sitecore.DevEx.Extensibility.Cache
                 .AddSingleton<SiteCacheClearTask>()
                 .AddSingleton<IJsonService, JsonService>()
                 .AddSingleton<ICacheApiClient, CacheApiClient>()
+                .AddSingleton<IConfigurationService, ConfigurationService>()
                 .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<CacheClearTask>())
                 .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<SiteCacheClearTask>())
                 .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<CacheApiClient>());

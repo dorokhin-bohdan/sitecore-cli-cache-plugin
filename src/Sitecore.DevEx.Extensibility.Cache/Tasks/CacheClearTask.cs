@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Client.Logging;
 using Sitecore.DevEx.Configuration;
 using Sitecore.DevEx.Extensibility.Cache.Services;
+using Sitecore.DevEx.Extensibility.Cache.Tasks.Base;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Tasks
 {
@@ -12,9 +13,10 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
     {
         private readonly ICacheApiClient _cacheApiClient;
 
-        public CacheClearTask(IRootConfigurationManager rootConfigurationManager, ILogger<CacheClearTask> logger,
-            ICacheApiClient cacheApiClient)
-            : base(rootConfigurationManager, logger)
+        public CacheClearTask(
+            IConfigurationService configurationService, 
+            ILogger<CacheClearTask> logger,
+            ICacheApiClient cacheApiClient) : base(configurationService, logger)
         {
             _cacheApiClient = cacheApiClient;
         }
@@ -25,7 +27,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             Logger.LogConsoleInformation("Starting clearing cache for Sitecore", ConsoleColor.DarkGreen);
             
             var outerStopwatch = Stopwatch.StartNew();
-            var environmentConfiguration = await GetEnvironmentConfigurationAsync(options.Config, options.EnvironmentName);
+            var environmentConfiguration = await ConfigurationService.GetEnvironmentConfigurationAsync(options.Config, options.EnvironmentName);
             var result = await _cacheApiClient.ClearAllAsync(environmentConfiguration).ConfigureAwait(false);
             outerStopwatch.Stop();
 
@@ -33,9 +35,8 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             
             if (result.Successful)
             {
-                Logger.LogConsoleInformation(string.Empty);
-                Logger.LogConsoleInformation($"Clearing cache is finished", ConsoleColor.Green);
-                Logger.LogConsoleVerbose($"Clearing cache is completed in {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);
+                Logger.LogConsoleInformation($"ClOperation completed inearing cache is finished", ConsoleColor.Green);
+                Logger.LogConsoleVerbose($" {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);
             }
         }
     }

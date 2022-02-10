@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Client.Logging;
-using Sitecore.DevEx.Configuration;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Extensibility.Cache.Models.Requests;
 using Sitecore.DevEx.Extensibility.Cache.Services;
+using Sitecore.DevEx.Extensibility.Cache.Tasks.Base;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Tasks
 {
@@ -14,9 +14,10 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
     {
         private readonly ICacheApiClient _endpointService;
 
-        public SiteCacheClearTask(IRootConfigurationManager rootConfigurationManager,
-            ILogger<SiteCacheClearTask> logger, ICacheApiClient endpointService)
-            : base(rootConfigurationManager, logger)
+        public SiteCacheClearTask(
+            IConfigurationService configurationService,
+            ILogger<SiteCacheClearTask> logger, 
+            ICacheApiClient endpointService) : base(configurationService, logger)
         {
             _endpointService = endpointService;
         }
@@ -34,7 +35,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             };
 
             var environmentConfiguration =
-                await GetEnvironmentConfigurationAsync(options.Config, options.EnvironmentName);
+                await ConfigurationService.GetEnvironmentConfigurationAsync(options.Config, options.EnvironmentName);
             var result = await _endpointService.ClearBySiteAsync(environmentConfiguration, request).ConfigureAwait(false);
             outerStopwatch.Stop();
             
@@ -42,9 +43,8 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             
             if (result.Successful)
             {
-                Logger.LogConsoleInformation(string.Empty);
-                Logger.LogConsoleInformation($"Clearing cache is finished", ConsoleColor.Green);
-                Logger.LogConsoleVerbose($"Clearing cache is completed in {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);   
+                Logger.LogConsoleInformation($"Clearing cache for \"{options.SiteName}\" is finished", ConsoleColor.Green);
+                Logger.LogConsoleVerbose($"Operation completed in {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);   
             }
         }
 
@@ -53,41 +53,47 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             CacheType? cacheType = null;
 
             if (options.ClearData)
-                cacheType = (cacheType ?? 0) | CacheType.Data;
+                AddCacheType(CacheType.Data, ref cacheType);
 
             if (options.ClearHtml)
-                cacheType = (cacheType ?? 0) | CacheType.Html;
+                AddCacheType(CacheType.Html, ref cacheType);
             
             if (options.ClearItem)
-                cacheType = (cacheType ?? 0) | CacheType.Item;
+                AddCacheType(CacheType.Item, ref cacheType);
+            
             if (options.ClearPath)
-                cacheType = (cacheType ?? 0) | CacheType.Path;
+                AddCacheType(CacheType.Path, ref cacheType);
             
             if (options.ClearItemPaths)
-                cacheType = (cacheType ?? 0) | CacheType.ItemPaths;
+                AddCacheType(CacheType.ItemPaths, ref cacheType);
             
             if (options.ClearStandardValues)
-                cacheType = (cacheType ?? 0) | CacheType.StandardValues;
+                AddCacheType(CacheType.StandardValues, ref cacheType);
             
             if (options.ClearFallback)
-                cacheType = (cacheType ?? 0) | CacheType.IsFallbackValid;
+                AddCacheType(CacheType.IsFallbackValid, ref cacheType);
             
             if (options.ClearRegistry)
-                cacheType = (cacheType ?? 0) | CacheType.Registry;
+                AddCacheType(CacheType.Registry, ref cacheType);
             
             if (options.ClearXsl)
-                cacheType = (cacheType ?? 0) | CacheType.Xsl;
+                AddCacheType(CacheType.Xsl, ref cacheType);
             
             if (options.ClearFilteredItems)
-                cacheType = (cacheType ?? 0) | CacheType.FilteredItems;
+                AddCacheType(CacheType.FilteredItems, ref cacheType);
             
             if (options.ClearRenderingParams)
-                cacheType = (cacheType ?? 0) | CacheType.RenderingParameters;
+                AddCacheType(CacheType.RenderingParameters, ref cacheType);
             
             if (options.ClearViewState)
-                cacheType = (cacheType ?? 0) | CacheType.ViewState;
+                AddCacheType(CacheType.ViewState, ref cacheType);
 
             return cacheType;
+
+            void AddCacheType(CacheType newCacheType, ref CacheType? result)
+            {
+                result = (result ?? 0) | newCacheType;
+            }
         }
     }
 }

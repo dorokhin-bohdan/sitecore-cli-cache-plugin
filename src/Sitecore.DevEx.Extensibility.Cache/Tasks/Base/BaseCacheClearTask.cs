@@ -5,34 +5,22 @@ using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Client.Logging;
 using Sitecore.DevEx.Configuration;
 using Sitecore.DevEx.Configuration.Models;
+using Sitecore.DevEx.Extensibility.Cache.Services;
 using Sitecore.DevEx.Logging;
 
-namespace Sitecore.DevEx.Extensibility.Cache.Tasks
+namespace Sitecore.DevEx.Extensibility.Cache.Tasks.Base
 {
     public abstract class BaseCacheClearTask
     {
-        private readonly IRootConfigurationManager _rootConfigurationManager;
+        protected readonly IConfigurationService ConfigurationService;
         protected readonly ILogger<BaseCacheClearTask> Logger;
 
-        protected BaseCacheClearTask(IRootConfigurationManager rootConfigurationManager, ILogger<BaseCacheClearTask> logger)
+        protected BaseCacheClearTask(IConfigurationService configurationService, ILogger<BaseCacheClearTask> logger)
         {
-            _rootConfigurationManager = rootConfigurationManager;
+            ConfigurationService = configurationService;
             Logger = logger;
         }
 
-        protected virtual async Task<EnvironmentConfiguration> GetEnvironmentConfigurationAsync(string config, string envName)
-        {
-            var rootConfiguration = await _rootConfigurationManager.ResolveRootConfiguration(config);
-
-            if (!rootConfiguration.Environments.TryGetValue(envName, out var environmentConfiguration))
-            {
-                throw new InvalidConfigurationException(
-                    $"Environment {envName} was not defined. Use the login command to define it.");
-            }
-
-            return environmentConfiguration;
-        }
-        
         protected virtual void PrintLogs(IEnumerable<OperationResult> operationResults)
         {
             foreach (var operationResult in operationResults)

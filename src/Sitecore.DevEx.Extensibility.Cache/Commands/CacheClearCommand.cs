@@ -8,7 +8,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Commands
 {
     public class CacheClearCommand : SubcommandBase<CacheClearTask, CacheClearSchemaArgs>
     {
-        public CacheClearCommand(IServiceProvider container) : base("clear", "Management cache for Sitecore.", container)
+        public CacheClearCommand(IServiceProvider container) : base("clear", "Cache management for Sitecore.", container)
         {
             AddOption(ArgOptions.Config);
             AddOption(ArgOptions.Trace);

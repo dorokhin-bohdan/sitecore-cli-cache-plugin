@@ -4,7 +4,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 {
     public class BytesConverter : IBytesConverter
     {
-        private static readonly string[] _sizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        private static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
         public string ToReadable(long value, int decimals = 2)
         {
@@ -34,7 +34,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 
             return string.Format("{0:n" + decimals + "} {1}",
                 sign * adjustedSize,
-                _sizeSuffixes[mag]);
+                SizeSuffixes[mag]);
         }
     }
 }
