@@ -35,8 +35,8 @@ namespace Sitecore.DevEx.Extensibility.Cache.Tasks
             
             if (result.Successful)
             {
-                Logger.LogConsoleInformation($"ClOperation completed inearing cache is finished", ConsoleColor.Green);
-                Logger.LogConsoleVerbose($" {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);
+                Logger.LogConsoleInformation($"Clearing cache is finished", ConsoleColor.Green);
+                Logger.LogConsoleVerbose($"Operation completed in {outerStopwatch.ElapsedMilliseconds}ms.", ConsoleColor.Yellow);
             }
         }
     }
