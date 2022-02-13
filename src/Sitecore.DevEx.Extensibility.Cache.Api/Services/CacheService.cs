@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Sitecore.Caching;
+using Sitecore.Abstractions;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -12,13 +12,21 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 {
     public class CacheService : ICacheService
     {
+        private readonly BaseSiteContextFactory _siteContextFactory;
+        private readonly BaseCacheManager _cacheManager;
         private readonly IEnumService _enumService;
         private readonly IBytesConverter _bytesConverter;
         private readonly IEnumerable<ICacheCleaner> _cacheCleaners;
 
-        public CacheService(IEnumService enumService, IBytesConverter bytesConverter,
+        public CacheService(
+            BaseSiteContextFactory siteContextFactory,
+            BaseCacheManager cacheManager,
+            IEnumService enumService,
+            IBytesConverter bytesConverter,
             IEnumerable<ICacheCleaner> cacheCleaners)
         {
+            _siteContextFactory = siteContextFactory;
+            _cacheManager = cacheManager;
             _enumService = enumService;
             _bytesConverter = bytesConverter;
             _cacheCleaners = cacheCleaners;
@@ -26,7 +34,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 
         public CacheResultModel ClearBySite(string siteName, CacheType? type)
         {
-            var site = SiteContext.GetSite(siteName);
+            var site = _siteContextFactory.GetSiteContext(siteName);
 
             if (site == null)
             {
@@ -52,10 +60,10 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             try
             {
                 var cacheScope = new OperationResult("Cache");
-                var size = CacheManager.GetStatistics().TotalSize;
+                var size = _cacheManager.GetStatistics().TotalSize;
 
                 var sw = Stopwatch.StartNew();
-                CacheManager.ClearAllCaches();
+                _cacheManager.ClearAllCaches();
                 sw.Stop();
 
                 cacheScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.AllCleared,

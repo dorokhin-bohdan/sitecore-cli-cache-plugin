@@ -9,9 +9,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base
 {
     public abstract class BaseCacheCleaner : ICacheCleaner
     {
-        private readonly IBytesConverter _bytesConverter;
-
         public abstract CacheType CacheType { get; }
+
+        private readonly IBytesConverter _bytesConverter;
         private string Name => Enum.GetName(typeof(CacheType), CacheType);
 
         protected BaseCacheCleaner(IBytesConverter bytesConverter)
@@ -19,9 +19,14 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base
             _bytesConverter = bytesConverter;
         }
 
-        public abstract OperationResult Clear(SiteContext context);
+        public abstract ICacheInfo GetCacheInfo(SiteContext context);
 
-        protected OperationResult Clear(ICacheInfo cacheInfo)
+        public OperationResult Clear(SiteContext context)
+        {
+            return Clear(GetCacheInfo(context));
+        }
+
+        private OperationResult Clear(ICacheInfo cacheInfo)
         {
             var scope = new OperationResult(Name);
 

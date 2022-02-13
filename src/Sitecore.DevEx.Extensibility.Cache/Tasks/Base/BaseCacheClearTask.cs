@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Client.Logging;
-using Sitecore.DevEx.Configuration;
-using Sitecore.DevEx.Configuration.Models;
 using Sitecore.DevEx.Extensibility.Cache.Services;
 using Sitecore.DevEx.Logging;
 

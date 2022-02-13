@@ -1,6 +1,6 @@
-﻿using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
+﻿using Sitecore.Caching;
+using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
-using Sitecore.DevEx.Logging;
 using Sitecore.Sites;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
@@ -13,9 +13,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
         {
         }
 
-        public override OperationResult Clear(SiteContext site)
+        public override ICacheInfo GetCacheInfo(SiteContext context)
         {
-            return Clear(site.Caches.XslCache.InnerCache);
+            return context.Caches.XslCache.InnerCache;
         }
     }
 }

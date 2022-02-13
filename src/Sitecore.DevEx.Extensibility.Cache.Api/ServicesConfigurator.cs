@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sitecore.DependencyInjection;
 using Sitecore.DevEx.Extensibility.Cache.Api.Controllers;
@@ -8,6 +9,7 @@ using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Api
 {
+    [ExcludeFromCodeCoverage]
     public class ServicesConfigurator : IServicesConfigurator
     {
         public void Configure(IServiceCollection serviceCollection)

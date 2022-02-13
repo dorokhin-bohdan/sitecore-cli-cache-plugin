@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web.Http;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services;
 using Sitecore.DevEx.Extensibility.Cache.Models.Requests;
 
@@ -6,6 +7,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Controllers
 {
     [Authorize]
     [RoutePrefix("sitecore/api/cachecleanup")]
+    [ExcludeFromCodeCoverage]
     public class CacheCleanupController : ApiController
     {
         private readonly ICacheService _cacheService;
