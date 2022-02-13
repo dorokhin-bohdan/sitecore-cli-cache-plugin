@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 {
@@ -10,7 +11,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
         {
             if (value == 0)
             {
-                return string.Format("{0:n" + decimals + "} bytes", 0);
+                return $"{0.ToString("N" + decimals, CultureInfo.InvariantCulture)} bytes";
             }
 
             var sign = Math.Sign(value);
@@ -23,18 +24,8 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             // 1L << (mag * 10) == 2 ^ (10 * mag) 
             // [i.e. the number of bytes in the unit corresponding to mag]
             var adjustedSize = (decimal)value / (1L << (mag * 10));
-
-            // make adjustment when the value is large enough that
-            // it would round up to 1000 or more
-            if (Math.Round(adjustedSize, decimals) >= 1000)
-            {
-                mag += 1;
-                adjustedSize /= 1024;
-            }
-
-            return string.Format("{0:n" + decimals + "} {1}",
-                sign * adjustedSize,
-                SizeSuffixes[mag]);
+            var size = sign * adjustedSize;
+            return $"{size.ToString("N" + decimals, CultureInfo.InvariantCulture)} {SizeSuffixes[mag]}";
         }
     }
 }

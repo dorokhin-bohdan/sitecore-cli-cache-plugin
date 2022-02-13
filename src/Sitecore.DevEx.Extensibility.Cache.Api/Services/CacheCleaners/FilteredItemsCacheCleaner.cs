@@ -1,46 +1,21 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Sitecore.Caching;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
-using Sitecore.DevEx.Logging;
 using Sitecore.Sites;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
 {
-    public class FilteredItemsCacheCleaner : ICacheCleaner
+    public class FilteredItemsCacheCleaner : BaseCacheCleaner
     {
-        public CacheType CacheType => CacheType.FilteredItems;
+        public override CacheType CacheType => CacheType.FilteredItems;
 
-        private readonly IBytesConverter _bytesConverter;
-
-        public FilteredItemsCacheCleaner(IBytesConverter bytesConverter)
+        public FilteredItemsCacheCleaner(IBytesConverter bytesConverter) : base(bytesConverter)
         {
-            _bytesConverter = bytesConverter;
         }
 
-        public OperationResult Clear(SiteContext site)
+        public override ICacheInfo GetCacheInfo(SiteContext context)
         {
-            var filteredItemsScope = new OperationResult("FilteredItems");
-            var size = site.Caches.FilteredItemsCache.InnerCache.Size;
-
-            try
-            {
-                var sw = Stopwatch.StartNew();
-                site.Caches.FilteredItemsCache.Clear();
-                sw.Stop();
-
-                filteredItemsScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.FilteredItemsCleared,
-                    "[Cache][FilteredItems] Filtered Items cache cleared successfully"));
-                filteredItemsScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.FilteredItemsCleared,
-                    $"[Cache][FilteredItems] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
-            }
-            catch (Exception e)
-            {
-                filteredItemsScope.Chain(OperationResult.FromException(e));
-                filteredItemsScope.Success = false;
-            }
-
-            return filteredItemsScope;
+            return context.Caches.FilteredItemsCache.InnerCache;
         }
     }
 }

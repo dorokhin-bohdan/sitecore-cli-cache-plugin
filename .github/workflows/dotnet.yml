@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/Sitecore.DevEx.Extensibility.Cache.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./src/Sitecore.DevEx.Extensibility.Cache.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./src/Sitecore.DevEx.Extensibility.Cache.sln --configuration Release --no-build --verbosity normal

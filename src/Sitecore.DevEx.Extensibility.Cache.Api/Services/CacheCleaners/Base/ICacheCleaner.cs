@@ -1,4 +1,5 @@
-﻿using Sitecore.DevEx.Extensibility.Cache.Models;
+﻿using Sitecore.Caching;
+using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
 using Sitecore.Sites;
 
@@ -8,6 +9,8 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base
     {
         CacheType CacheType { get; }
 
+        ICacheInfo GetCacheInfo(SiteContext context);
+        
         OperationResult Clear(SiteContext context);
     }
 }

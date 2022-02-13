@@ -1,46 +1,22 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Sitecore.Caching;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
-using Sitecore.DevEx.Logging;
 using Sitecore.Sites;
 
 namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
 {
-    public class ItemCacheCleaner : ICacheCleaner
+    public class ItemCacheCleaner : BaseCacheCleaner
     {
-        public CacheType CacheType => CacheType.Item;
+        public override CacheType CacheType => CacheType.Item;
 
-        private readonly IBytesConverter _bytesConverter;
 
-        public ItemCacheCleaner(IBytesConverter bytesConverter)
+        public ItemCacheCleaner(IBytesConverter bytesConverter) : base(bytesConverter)
         {
-            _bytesConverter = bytesConverter;
         }
 
-        public OperationResult Clear(SiteContext site)
+        public override ICacheInfo GetCacheInfo(SiteContext context)
         {
-            var itemScope = new OperationResult("Item");
-            var size = site.Database.Caches.ItemCache.InnerCache.Size;
-
-            try
-            {
-                var sw = Stopwatch.StartNew();
-                site.Database.Caches.ItemCache.Clear();
-                sw.Stop();
-
-                itemScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.ItemCleared,
-                    "[Cache][Item] Item cache cleared successfully"));
-                itemScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.ItemCleared,
-                    $"[Cache][Item] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
-            }
-            catch (Exception e)
-            {
-                itemScope.Chain(OperationResult.FromException(e));
-                itemScope.Success = false;
-            }
-
-            return itemScope;
+            return context.Database.Caches.ItemCache.InnerCache;
         }
     }
 }
