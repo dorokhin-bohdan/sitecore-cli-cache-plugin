@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
+    - name: Restore dependencies ./src/Sitecore.DevEx.Extensibility.Cache.sln
       run: dotnet restore
     - name: Build
       run: dotnet build ./src/Sitecore.DevEx.Extensibility.Cache.sln --configuration Release --no-restore
