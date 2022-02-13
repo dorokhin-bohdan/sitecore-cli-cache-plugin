@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Web.Http;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services;
 using Sitecore.DevEx.Extensibility.Cache.Models.Requests;
