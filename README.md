@@ -1,4 +1,5 @@
 # Cache plugin for Sitecore CLI 4.1
+[![.NET](https://github.com/dorohin/sitecore-cli-cache-plugin/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/dorohin/sitecore-cli-cache-plugin/actions/workflows/dotnet.yml)
 ---
 The cache plugin automates clearing cache operations, such as clear all cache and clear cache for specific site, which reduces manual steps when setting up local development environments or doing production deployments.
 
