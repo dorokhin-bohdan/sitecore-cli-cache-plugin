@@ -16,6 +16,13 @@
         <RootNamespace>Sitecore.DevEx.Extensibility.Cache</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <PackageVersion>4.1.0</PackageVersion>
+        <Title>Sitecore.DevEx.Extensibility.Cache</Title>
+        <Description>The cache plugin automates clearing cache operations, such as clear all cache and clear cache for specific site, which reduces manual steps when setting up local development environments or doing production deployments.</Description>
+        <Copyright>Copyright (c) 2022 Bohdan Dorokhin</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/dorohin/sitecore-cli-cache-plugin</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Sitecore, Cache, CLI, Plugin</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

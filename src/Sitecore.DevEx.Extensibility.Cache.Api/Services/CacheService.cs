@@ -14,20 +14,17 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
     {
         private readonly BaseSiteContextFactory _siteContextFactory;
         private readonly BaseCacheManager _cacheManager;
-        private readonly IEnumService _enumService;
         private readonly IBytesConverter _bytesConverter;
         private readonly IEnumerable<ICacheCleaner> _cacheCleaners;
 
         public CacheService(
             BaseSiteContextFactory siteContextFactory,
             BaseCacheManager cacheManager,
-            IEnumService enumService,
             IBytesConverter bytesConverter,
             IEnumerable<ICacheCleaner> cacheCleaners)
         {
             _siteContextFactory = siteContextFactory;
             _cacheManager = cacheManager;
-            _enumService = enumService;
             _bytesConverter = bytesConverter;
             _cacheCleaners = cacheCleaners;
         }
@@ -43,11 +40,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 
             var result = new CacheResultModel
             {
-                OperationResults = type == null
-                    ? ClearAllCachesForSite(site)
-                    : _enumService.GetFlagValues(type.Value)
-                        .Select(cacheType =>
-                            _cacheCleaners.FirstOrDefault(cc => cc.CacheType == cacheType)?.Clear(site))
+                OperationResults = ClearCachesForSite(site, type)
             };
 
             return result;
@@ -82,9 +75,14 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
         }
 
 
-        private IEnumerable<OperationResult> ClearAllCachesForSite(SiteContext site)
+        private IEnumerable<OperationResult> ClearCachesForSite(SiteContext site, CacheType? type)
         {
-            foreach (var cacheCleaner in _cacheCleaners)
+            var involvedCleaners = _cacheCleaners;
+
+            if (type != null)
+                involvedCleaners = _cacheCleaners.Where(cc => (type & cc.CacheType) != 0);
+
+            foreach (var cacheCleaner in involvedCleaners)
                 yield return cacheCleaner.Clear(site);
         }
     }
