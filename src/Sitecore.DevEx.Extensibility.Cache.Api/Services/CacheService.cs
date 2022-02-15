@@ -80,7 +80,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             var involvedCleaners = _cacheCleaners;
 
             if (type != null)
-                involvedCleaners = _cacheCleaners.Where(cc => (type & cc.CacheType) != 0);
+                involvedCleaners = _cacheCleaners.Where(cc => type.Value.HasFlag(cc.CacheType));
 
             foreach (var cacheCleaner in involvedCleaners)
                 yield return cacheCleaner.Clear(site);
