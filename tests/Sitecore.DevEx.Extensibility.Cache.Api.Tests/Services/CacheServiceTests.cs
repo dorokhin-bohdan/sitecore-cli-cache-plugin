@@ -21,8 +21,6 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Tests.Services
     {
         private readonly Mock<BaseCacheManager> _baseCacheManagerMock;
         private readonly Mock<BaseSiteContextFactory> _baseSiteContextFactoryMock;
-        private readonly Mock<IEnumService> _enumServiceMock;
-        private readonly Mock<IBytesConverter> _bytesConverterMock;
         private readonly List<ICacheCleaner> _cleaners;
 
         private readonly ICacheService _cacheService;
@@ -31,13 +29,11 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Tests.Services
         {
             _baseCacheManagerMock = new Mock<BaseCacheManager>();
             _baseSiteContextFactoryMock = new Mock<BaseSiteContextFactory>();
-            _enumServiceMock = new Mock<IEnumService>();
-            _bytesConverterMock = new Mock<IBytesConverter>();
+            var bytesConverterMock = new Mock<IBytesConverter>();
             _cleaners = new List<ICacheCleaner>();
 
             _cacheService = new CacheService(_baseSiteContextFactoryMock.Object, _baseCacheManagerMock.Object,
-                _enumServiceMock.Object,
-                _bytesConverterMock.Object, _cleaners);
+                bytesConverterMock.Object, _cleaners);
         }
 
         [Fact]
@@ -139,8 +135,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Tests.Services
             var ignoredCleaners = supportedCleaners.Except(executedCleaners).ToList();
             
             supportedCleaners.ForEach(c => _cleaners.Add(c.Object));
-
-            _enumServiceMock.Setup(x => x.GetFlagValues(requestedCacheType)).Returns(executedCacheTypes);
+            
             _baseSiteContextFactoryMock.Setup(x => x.GetSiteContext(It.IsAny<string>()))
                 .Returns(new SiteContext(SiteInfo.Create(new StringDictionary())));
             

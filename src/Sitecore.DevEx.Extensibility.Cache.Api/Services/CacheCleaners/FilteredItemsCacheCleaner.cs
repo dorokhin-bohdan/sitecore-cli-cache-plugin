@@ -1,4 +1,5 @@
-﻿using Sitecore.Caching;
+﻿using Microsoft.Extensions.Logging;
+using Sitecore.Caching;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.Sites;
@@ -8,6 +9,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
     public class FilteredItemsCacheCleaner : BaseCacheCleaner
     {
         public override CacheType CacheType => CacheType.FilteredItems;
+        public override EventId EventId => CacheEventIds.FilteredItemsCleared;
 
         public FilteredItemsCacheCleaner(IBytesConverter bytesConverter) : base(bytesConverter)
         {

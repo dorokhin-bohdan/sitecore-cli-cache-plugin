@@ -1,4 +1,5 @@
-﻿using Sitecore.Caching;
+﻿using Microsoft.Extensions.Logging;
+using Sitecore.Caching;
 using Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.Sites;
@@ -8,6 +9,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners
     public class IsFallbackValidCacheCleaner : BaseCacheCleaner
     {
         public override CacheType CacheType => CacheType.IsFallbackValid;
+        public override EventId EventId => CacheEventIds.IsFallbackValidCleared;
         
         public IsFallbackValidCacheCleaner(IBytesConverter bytesConverter) : base(bytesConverter)
         {

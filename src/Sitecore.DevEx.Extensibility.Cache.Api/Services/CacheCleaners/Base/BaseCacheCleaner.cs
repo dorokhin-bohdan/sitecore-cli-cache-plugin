@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Sitecore.Caching;
 using Sitecore.DevEx.Extensibility.Cache.Models;
 using Sitecore.DevEx.Logging;
@@ -10,6 +11,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base
     public abstract class BaseCacheCleaner : ICacheCleaner
     {
         public abstract CacheType CacheType { get; }
+        public abstract EventId EventId { get; }
 
         private readonly IBytesConverter _bytesConverter;
         private string Name => Enum.GetName(typeof(CacheType), CacheType);
@@ -38,9 +40,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base
                 cacheInfo.Clear();
                 sw.Stop();
 
-                scope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.DataCleared,
+                scope.Chain(OperationResult.FromInfoSuccess(EventId,
                     $"[Cache][{Name}] Cache cleared successfully"));
-                scope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.DataCleared,
+                scope.Chain(OperationResult.FromVerboseSuccess(EventId,
                     $"[Cache][{Name}] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
             }
             catch (Exception e)
