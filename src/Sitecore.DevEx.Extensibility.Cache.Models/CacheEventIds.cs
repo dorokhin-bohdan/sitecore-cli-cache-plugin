@@ -4,7 +4,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Models
 {
     public static class CacheEventIds
     {
-        public static readonly EventId AllCleared = new EventId(1, nameof(DataCleared));
+        public static readonly EventId AllCleared = new EventId(1, nameof(AllCleared));
         public static readonly EventId DataCleared = new EventId(2, nameof(DataCleared));
         public static readonly EventId HtmlCleared = new EventId(3, nameof(HtmlCleared));
         public static readonly EventId ItemCleared = new EventId(4, nameof(ItemCleared));
@@ -18,6 +18,6 @@ namespace Sitecore.DevEx.Extensibility.Cache.Models
         public static readonly EventId RenderingParametersCleared = new EventId(12, nameof(RenderingParametersCleared));
         public static readonly EventId ViewStateCleared = new EventId(13, nameof(ViewStateCleared));
         
-        public static readonly EventId ApiQuery = new EventId(128, nameof(PathCleared));
+        public static readonly EventId ApiQuery = new EventId(128, nameof(ApiQuery));
     }
 }
