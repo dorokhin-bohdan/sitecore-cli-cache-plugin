@@ -40,7 +40,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 
             var result = new CacheResultModel
             {
-                OperationResults = ClearCachesForSite(site, type)
+                OperationResults = ClearSiteCaches(site, type)
             };
 
             return result;
@@ -75,7 +75,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
         }
 
 
-        private IEnumerable<OperationResult> ClearCachesForSite(SiteContext site, CacheType? type)
+        private IEnumerable<OperationResult> ClearSiteCaches(SiteContext site, CacheType? type)
         {
             var involvedCleaners = _cacheCleaners;
 

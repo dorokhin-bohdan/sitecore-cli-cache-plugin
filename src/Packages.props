@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <SitecoreExtensibilityVersion>4.1.1</SitecoreExtensibilityVersion>
+        <SitecoreExtensibilityVersion>4.2.0</SitecoreExtensibilityVersion>
         <SitecoreVersion>10.2.0</SitecoreVersion>
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Update="Microsoft.AspNet.WebApi.Core" Version="5.2.6" />
+        <PackageReference Update="Microsoft.AspNet.WebApi.Core" Version="5.2.8" />
         <PackageReference Update="Microsoft.Extensions.Http" Version="2.1.1" />
         <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
 
