@@ -15,7 +15,7 @@
         <PackageId>Sitecore.DevEx.Extensibility.Cache</PackageId>
         <RootNamespace>Sitecore.DevEx.Extensibility.Cache</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <PackageVersion>4.2.0</PackageVersion>
+        <PackageVersion>5.1.25</PackageVersion>
         <Title>Sitecore.DevEx.Extensibility.Cache</Title>
         <Description>The cache plugin automates clearing cache operations, such as clear all cache and clear cache for specific site, which reduces manual steps when setting up local development environments or doing production deployments.</Description>
         <Copyright>Copyright (c) 2022 Bohdan Dorokhin</Copyright>

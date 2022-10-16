@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <SitecoreExtensibilityVersion>4.2.0</SitecoreExtensibilityVersion>
+        <SitecoreExtensibilityVersion>5.1.25</SitecoreExtensibilityVersion>
         <SitecoreVersion>10.2.0</SitecoreVersion>
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Update="Microsoft.AspNet.WebApi.Core" Version="5.2.8" />
-        <PackageReference Update="Microsoft.Extensions.Http" Version="2.1.1" />
-        <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
+        <PackageReference Update="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+        <PackageReference Update="Microsoft.Extensions.Http" Version="6.0.0" />
+        <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
 
         <PackageReference Update="Sitecore.Devex.Client.Cli.Extensibility" Version="$(SitecoreExtensibilityVersion)" />
         <PackageReference Update="Sitecore.Kernel" Version="$(SitecoreVersion)" />
