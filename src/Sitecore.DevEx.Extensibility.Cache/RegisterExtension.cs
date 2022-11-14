@@ -11,50 +11,49 @@ using Sitecore.DevEx.Extensibility.Cache.Constants;
 using Sitecore.DevEx.Extensibility.Cache.Services;
 using Sitecore.DevEx.Extensibility.Cache.Tasks;
 
-namespace Sitecore.DevEx.Extensibility.Cache
+namespace Sitecore.DevEx.Extensibility.Cache;
+
+public class RegisterExtension : ISitecoreCliExtension
 {
-    public class RegisterExtension : ISitecoreCliExtension
+    public void AddConfiguration(IConfigurationBuilder configBuilder)
     {
-        public void AddConfiguration(IConfigurationBuilder configBuilder)
-        {
-        }
+    }
 
-        public void AddServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection
-                .AddSingleton<CacheClearCommand>()
-                .AddSingleton<SiteCacheClearCommand>()
-                .AddSingleton<CacheClearTask>()
-                .AddSingleton<SiteCacheClearTask>()
-                .AddSingleton<IJsonService, JsonService>()
-                .AddSingleton<ICacheApiClient, CacheApiClient>()
-                .AddSingleton<IConfigurationService, ConfigurationService>()
-                .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<CacheClearTask>())
-                .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<SiteCacheClearTask>())
-                .AddSingleton(sp => sp.GetService<ILoggerFactory>().CreateLogger<CacheApiClient>());
+    public void AddServices(IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddSingleton<CacheClearCommand>()
+            .AddSingleton<SiteCacheClearCommand>()
+            .AddSingleton<CacheClearTask>()
+            .AddSingleton<SiteCacheClearTask>()
+            .AddSingleton<IJsonService, JsonService>()
+            .AddSingleton<ICacheApiClient, CacheApiClient>()
+            .AddSingleton<IConfigurationService, ConfigurationService>()
+            .AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger<CacheClearTask>())
+            .AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger<SiteCacheClearTask>())
+            .AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger<CacheApiClient>());
 
-            serviceCollection.AddHttpClient(CacheConstants.HttpClientName, client =>
-                {
-                    client.Timeout = TimeSpan.FromMinutes(5);
-                })
-                .ConfigurePrimaryHttpMessageHandler(_ => new CompressionAwareHttpClientHandler());
-        }
-
-        public IEnumerable<ISubcommand> AddCommands(IServiceProvider container)
-        {
-            return new[]
+        serviceCollection.AddHttpClient(CacheConstants.HttpClientName, client =>
             {
-                CreateCacheCommand(container)
-            };
-        }
+                client.Timeout = TimeSpan.FromMinutes(5);
+            })
+            .ConfigurePrimaryHttpMessageHandler(_ => new CompressionAwareHttpClientHandler());
+    }
 
-        private static ISubcommand CreateCacheCommand(IServiceProvider container)
+    public IEnumerable<ISubcommand> AddCommands(IServiceProvider container)
+    {
+        return new[]
         {
-            var cacheCommand = new CacheCommand("cache", "Cache commands for manage global cache and site cache.");
-            cacheCommand.AddCommand(container.GetRequiredService<CacheClearCommand>());
-            cacheCommand.AddCommand(container.GetRequiredService<SiteCacheClearCommand>());
+            CreateCacheCommand(container)
+        };
+    }
 
-            return cacheCommand;
-        }
+    private static ISubcommand CreateCacheCommand(IServiceProvider container)
+    {
+        var cacheCommand = new CacheCommand("cache", "Cache commands for manage global cache and site cache.");
+        cacheCommand.AddCommand(container.GetRequiredService<CacheClearCommand>());
+        cacheCommand.AddCommand(container.GetRequiredService<SiteCacheClearCommand>());
+
+        return cacheCommand;
     }
 }

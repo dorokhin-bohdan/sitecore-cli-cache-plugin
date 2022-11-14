@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Sitecore.DevEx.Configuration.Models;
 
-namespace Sitecore.DevEx.Extensibility.Cache.Services
+namespace Sitecore.DevEx.Extensibility.Cache.Services;
+
+public interface IConfigurationService
 {
-    public interface IConfigurationService
-    {
-        Task<RootConfiguration> GetRootConfigurationAsync(string configPath);
-        Task<EnvironmentConfiguration> GetEnvironmentConfigurationAsync(string config, string envName);
-    }
+    Task<RootConfiguration> GetRootConfigurationAsync(string configPath);
+    Task<EnvironmentConfiguration> GetEnvironmentConfigurationAsync(string config, string envName);
 }

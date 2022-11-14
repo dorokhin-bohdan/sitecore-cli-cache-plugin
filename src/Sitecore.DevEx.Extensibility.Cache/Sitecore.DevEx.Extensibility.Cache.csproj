@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.1.3" />
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <NeutralLanguage>en</NeutralLanguage>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>

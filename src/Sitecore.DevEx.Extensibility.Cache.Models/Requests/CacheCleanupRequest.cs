@@ -1,8 +1,7 @@
-﻿namespace Sitecore.DevEx.Extensibility.Cache.Models.Requests
+﻿namespace Sitecore.DevEx.Extensibility.Cache.Models.Requests;
+
+public class CacheCleanupRequest
 {
-    public class CacheCleanupRequest
-    {
-        public CacheType? CacheType { get; set; }
-        public string Site { get; set; }
-    }
+    public CacheType? CacheType { get; set; }
+    public string Site { get; set; }
 }

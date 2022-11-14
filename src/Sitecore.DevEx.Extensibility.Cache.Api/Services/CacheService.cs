@@ -35,7 +35,7 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
 
             if (site == null)
             {
-                throw new ArgumentException($"The {siteName} site not found");
+                throw new ArgumentException($"The {siteName} site not found.");
             }
 
             var result = new CacheResultModel
@@ -60,9 +60,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
                 sw.Stop();
 
                 cacheScope.Chain(OperationResult.FromInfoSuccess(CacheEventIds.AllCleared,
-                    "[Cache] Cache cleared successfully"));
+                    "[Cache] Cache cleared successfully."));
                 cacheScope.Chain(OperationResult.FromVerboseSuccess(CacheEventIds.AllCleared,
-                    $"[Cache] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+                    $"[Cache] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
                 result.OperationResults = new[] { cacheScope };
             }
             catch (Exception e)
@@ -74,12 +74,11 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services
             return result;
         }
 
-
         private IEnumerable<OperationResult> ClearSiteCaches(SiteContext site, CacheType? type)
         {
             var involvedCleaners = _cacheCleaners;
 
-            if (type != null)
+            if (type is not null)
                 involvedCleaners = _cacheCleaners.Where(cc => type.Value.HasFlag(cc.CacheType));
 
             foreach (var cacheCleaner in involvedCleaners)

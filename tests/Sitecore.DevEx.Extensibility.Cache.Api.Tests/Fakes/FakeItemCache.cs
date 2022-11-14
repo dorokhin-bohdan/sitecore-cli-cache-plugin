@@ -2,13 +2,12 @@
 using Sitecore.Caching.Generics;
 using Sitecore.Data;
 
-namespace Sitecore.DevEx.Extensibility.Cache.Api.Tests.Fakes
+namespace Sitecore.DevEx.Extensibility.Cache.Api.Tests.Fakes;
+
+public class FakeItemCache : ItemCache
 {
-    public class FakeItemCache : ItemCache
+    public FakeItemCache(Database database, long maxSize, ICache<string> innerCache) : base(database, maxSize)
     {
-        public FakeItemCache(Database database, long maxSize, ICache<string> innerCache) : base(database, maxSize)
-        {
-            InnerCache = innerCache;
-        }
+        InnerCache = innerCache;
     }
 }

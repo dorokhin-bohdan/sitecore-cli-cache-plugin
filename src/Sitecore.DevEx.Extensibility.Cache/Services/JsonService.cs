@@ -2,35 +2,34 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Sitecore.DevEx.Extensibility.Cache.Services
+namespace Sitecore.DevEx.Extensibility.Cache.Services;
+
+public class JsonService : IJsonService
 {
-    public class JsonService : IJsonService
+    private readonly JsonSerializerSettings _settings = new()
     {
-        private readonly JsonSerializerSettings _settings = new JsonSerializerSettings
-        {
-            Formatting = Formatting.Indented,
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            TypeNameHandling = TypeNameHandling.None
-        };
+        Formatting = Formatting.Indented,
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        TypeNameHandling = TypeNameHandling.None
+    };
         
-        public string Serialize<T>(T obj)
+    public string Serialize<T>(T obj)
+    {
+        if (obj == null)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-
-            return JsonConvert.SerializeObject(obj, _settings);
+            throw new ArgumentNullException(nameof(obj));
         }
 
-        public T Deserialize<T>(string json)
+        return JsonConvert.SerializeObject(obj, _settings);
+    }
+
+    public T Deserialize<T>(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
         {
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                throw new ArgumentNullException(nameof(json));
-            }
+            throw new ArgumentNullException(nameof(json));
+        }
             
-            return JsonConvert.DeserializeObject<T>(json, _settings);
-        }
+        return JsonConvert.DeserializeObject<T>(json, _settings);
     }
 }

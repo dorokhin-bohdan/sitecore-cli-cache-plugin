@@ -1,9 +1,8 @@
-﻿namespace Sitecore.DevEx.Extensibility.Cache.Services
+﻿namespace Sitecore.DevEx.Extensibility.Cache.Services;
+
+public interface IJsonService
 {
-    public interface IJsonService
-    {
-        string Serialize<T>(T obj);
+    string Serialize<T>(T obj);
         
-        T Deserialize<T>(string json);
-    }
+    T Deserialize<T>(string json);
 }

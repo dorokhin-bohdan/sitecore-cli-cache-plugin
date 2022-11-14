@@ -5,43 +5,42 @@ using Sitecore.DevEx.Client.Logging;
 using Sitecore.DevEx.Extensibility.Cache.Services;
 using Sitecore.DevEx.Logging;
 
-namespace Sitecore.DevEx.Extensibility.Cache.Tasks.Base
+namespace Sitecore.DevEx.Extensibility.Cache.Tasks.Base;
+
+public abstract class BaseCacheClearTask
 {
-    public abstract class BaseCacheClearTask
+    protected readonly IConfigurationService ConfigurationService;
+    protected readonly ILogger<BaseCacheClearTask> Logger;
+
+    protected BaseCacheClearTask(IConfigurationService configurationService, ILogger<BaseCacheClearTask> logger)
     {
-        protected readonly IConfigurationService ConfigurationService;
-        protected readonly ILogger<BaseCacheClearTask> Logger;
+        ConfigurationService = configurationService;
+        Logger = logger;
+    }
 
-        protected BaseCacheClearTask(IConfigurationService configurationService, ILogger<BaseCacheClearTask> logger)
+    protected virtual void PrintLogs(IEnumerable<OperationResult> operationResults)
+    {
+        foreach (var operationResult in operationResults)
         {
-            ConfigurationService = configurationService;
-            Logger = logger;
-        }
-
-        protected virtual void PrintLogs(IEnumerable<OperationResult> operationResults)
-        {
-            foreach (var operationResult in operationResults)
+            foreach (var message in operationResult.Messages)
             {
-                foreach (var message in operationResult.Messages)
+                switch (message.LogLevel)
                 {
-                    switch (message.LogLevel)
-                    {
-                        case LogLevel.Debug:
-                            Logger.LogConsoleVerbose(message.Message, ConsoleColor.Yellow);
-                            break;
-                        case LogLevel.Information:
-                            Logger.LogConsoleInformation(message.Message, ConsoleColor.Green);
-                            break;
-                        case LogLevel.Trace:
-                        case LogLevel.Warning:
-                        case LogLevel.Error:
-                        case LogLevel.Critical:
-                        case LogLevel.None:
-                            Logger.LogConsole(message.LogLevel, message.Message);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    case LogLevel.Debug:
+                        Logger.LogConsoleVerbose(message.Message, ConsoleColor.Yellow);
+                        break;
+                    case LogLevel.Information:
+                        Logger.LogConsoleInformation(message.Message, ConsoleColor.Green);
+                        break;
+                    case LogLevel.Trace:
+                    case LogLevel.Warning:
+                    case LogLevel.Error:
+                    case LogLevel.Critical:
+                    case LogLevel.None:
+                        Logger.LogConsole(message.LogLevel, message.Message);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }

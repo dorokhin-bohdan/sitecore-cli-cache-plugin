@@ -1,12 +1,11 @@
 ﻿using System.CommandLine;
 using Sitecore.Devex.Client.Cli.Extensibility.Subcommands;
 
-namespace Sitecore.DevEx.Extensibility.Cache.Commands.Base
+namespace Sitecore.DevEx.Extensibility.Cache.Commands.Base;
+
+public class CacheCommand : Command, ISubcommand
 {
-    public class CacheCommand : Command, ISubcommand
+    public CacheCommand(string name, string description = null) : base(name, description)
     {
-        public CacheCommand(string name, string description = null) : base(name, description)
-        {
-        }
     }
 }

@@ -41,9 +41,9 @@ namespace Sitecore.DevEx.Extensibility.Cache.Api.Services.CacheCleaners.Base
                 sw.Stop();
 
                 scope.Chain(OperationResult.FromInfoSuccess(EventId,
-                    $"[Cache][{Name}] Cache cleared successfully"));
+                    $"[Cache][{Name}] Cache cleared successfully."));
                 scope.Chain(OperationResult.FromVerboseSuccess(EventId,
-                    $"[Cache][{Name}] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms"));
+                    $"[Cache][{Name}] The {_bytesConverter.ToReadable(size)} cleared in {sw.ElapsedMilliseconds}ms."));
             }
             catch (Exception e)
             {
